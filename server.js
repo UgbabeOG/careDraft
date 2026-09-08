@@ -5,6 +5,7 @@ import { GoogleGenAI } from "@google/genai";
 
 const app = express();
 const port = Number(process.env.PORT || 8787);
+const model = process.env.GEMINI_MODEL || "gemini-3.6-flash";
 const ai = process.env.GEMINI_API_KEY ? new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY.trim() }) : null;
 
 app.use(cors());
@@ -30,7 +31,7 @@ app.post("/api/draft-response", async (req, res) => {
 
   try {
     const result = await ai.models.generateContent({
-      model: "gemini-2.5-flash",
+      model,
       contents: emailText,
       config: {
         systemInstruction: `You are a senior customer support specialist for a trusted online pharmacy.
