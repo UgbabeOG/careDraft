@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>CareDraft</title>
+    <link rel="stylesheet" href="popup.css">
+  </head>
+  <body>
+    <header class="brand"><div class="brand-mark" aria-hidden="true">+</div><div><strong>CareDraft</strong><span>Pharmacy support copilot</span></div><span class="status-dot" title="Ready"></span></header>
+    <main>
+      <section id="empty-state" class="empty-state"><div class="mail-icon" aria-hidden="true">✉</div><h1>Ready when you are</h1><p>Open a customer email, then click <b>Draft reply</b> to create a warm, considerate response.</p><button id="draft-button" class="primary">Draft reply <span>→</span></button></section>
+      <section id="loading-state" class="empty-state hidden" aria-live="polite"><div class="spinner" aria-hidden="true"></div><h1>Writing with care…</h1><p>Preparing a thoughtful response.</p></section>
+      <section id="draft-state" class="hidden"><div class="section-heading"><div><span class="eyebrow">Suggested response</span><h1>Draft reply</h1></div><span class="badge">Editable</span></div><label class="sr-only" for="draft">Response draft</label><textarea id="draft" spellcheck="true"></textarea><p class="disclaimer">Review details and medication guidance before sending.</p><div class="actions"><button id="copy-button" class="secondary">Copy draft</button><button id="insert-button" class="primary">Insert in reply <span>→</span></button></div><button id="retry-button" class="text-button">Generate another draft</button></section>
+      <p id="error" class="error hidden" role="alert"></p>
+    </main>
+    <footer><label for="api-url">API endpoint</label><input id="api-url" type="url" autocomplete="off" placeholder="http://127.0.0.1:8787/api"></footer>
+    <script src="popup.js"></script>
+  </body>
+</html>
