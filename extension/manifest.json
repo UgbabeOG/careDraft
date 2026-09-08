@@ -1,0 +1,19 @@
+{
+  "manifest_version": 3,
+  "name": "CareDraft - Pharmacy Support",
+  "version": "1.0.0",
+  "description": "Create warm, considerate pharmacy support email drafts.",
+  "permissions": ["activeTab", "storage"],
+  "host_permissions": ["http://127.0.0.1:8787/*", "https://*.onrender.com/*"],
+  "action": {
+    "default_title": "Draft a pharmacy support reply",
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://mail.google.com/*", "https://outlook.live.com/*", "https://outlook.office.com/*"],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ]
+}
