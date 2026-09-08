@@ -29,7 +29,12 @@ async function generateDraft() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ emailText: email.text })
     });
-    const data = await response.json();
+    const contentType = response.headers.get("content-type") || "";
+    const responseText = await response.text();
+    if (!contentType.includes("application/json")) {
+      throw new Error(`The API returned an unexpected response (${response.status}). Check that the API URL ends with /api.`);
+    }
+    const data = JSON.parse(responseText);
     if (!response.ok || !data.success) throw new Error(data.error || "Unable to create a draft.");
     $("draft").value = data.draft;
     showView($("draft-state"));

@@ -5,9 +5,24 @@ const EMAIL_SELECTORS = [
 ];
 
 function getEmailText() {
-  const source = EMAIL_SELECTORS.map((selector) => document.querySelector(selector)).find(Boolean)
-    || document.querySelector('[role="main"]') || document.body;
-  return (source.innerText || "").replace(/\n{3,}/g, "\n\n").trim().slice(0, 12000);
+  // Use the first selector that finds messages so overlapping Gmail selectors
+  // do not cause the same message to be sent more than once.
+  const messageNodes = EMAIL_SELECTORS.map((selector) => Array.from(document.querySelectorAll(selector)))
+    .find((nodes) => nodes.length > 0) || [];
+
+  const messages = messageNodes
+    .map((node, index) => {
+      const text = (node.innerText || "").replace(/\n{3,}/g, "\n\n").trim();
+      return text ? `--- Conversation message ${index + 1} ---\n${text}` : "";
+    })
+    .filter(Boolean);
+
+  if (messages.length > 0) {
+    return messages.join("\n\n").slice(0, 12000);
+  }
+
+  const fallback = document.querySelector('[role="main"]') || document.body;
+  return (fallback.innerText || "").replace(/\n{3,}/g, "\n\n").trim().slice(0, 12000);
 }
 
 function findReplyEditor() {
